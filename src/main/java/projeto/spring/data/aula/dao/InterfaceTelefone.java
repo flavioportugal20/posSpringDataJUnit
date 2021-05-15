@@ -2,23 +2,23 @@ package projeto.spring.data.aula.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import projeto.spring.data.aula.model.Telefone;
 
 @Repository
 public interface InterfaceTelefone extends CrudRepository<Telefone, Long> {
 	
+	@Transactional(readOnly = true)
 	@Query(value = "select p from Telefone p where p.numero like %?1%")
 	public List<Telefone> buscaPorNumero (String numero);
 	
-	
+	@Transactional(readOnly = true)
 	@Query(value = "select p from Telefone p where p.numero = :paramnumero")
 	public Telefone buscaPorNumeroParam (@Param("paramnumero") String paramnumero);
 	
